@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebServLib", "WebServLib\We
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebServConsole", "WebServConsole\WebServConsole.csproj", "{63DEBE31-E26B-4790-AD54-9604DF4B9AE5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extensions", "Extensions\Extensions.csproj", "{2EA8D28C-E232-4B16-A045-027BF2883D27}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{63DEBE31-E26B-4790-AD54-9604DF4B9AE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63DEBE31-E26B-4790-AD54-9604DF4B9AE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{63DEBE31-E26B-4790-AD54-9604DF4B9AE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EA8D28C-E232-4B16-A045-027BF2883D27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EA8D28C-E232-4B16-A045-027BF2883D27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EA8D28C-E232-4B16-A045-027BF2883D27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EA8D28C-E232-4B16-A045-027BF2883D27}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

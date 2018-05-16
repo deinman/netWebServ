@@ -6,6 +6,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Extensions;
 
 namespace WebServLib
 {
@@ -81,6 +82,7 @@ namespace WebServLib
             sem.Release();
 
             // We have a connection!
+            Log(context.Request);
 
             var response = "Hello Browser!";
             var encoded = Encoding.UTF8.GetBytes(response);
@@ -95,6 +97,17 @@ namespace WebServLib
             var localHostIPs = GetLocalHostIPs();
             var listener = InitializeListener(localHostIPs);
             Start(listener);
+        }
+
+        public static void Log(HttpListenerRequest request)
+        {
+            var s = new StringBuilder();
+
+            s.Append(request.RemoteEndPoint + " ");
+            s.Append(request.HttpMethod + " /");
+            s.Append(request.Url.AbsoluteUri.RightOf('/', 3));
+
+            Console.WriteLine(s.ToString());
         }
     }
 }
