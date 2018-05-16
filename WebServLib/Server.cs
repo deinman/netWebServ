@@ -13,6 +13,7 @@ namespace WebServLib
     public static class Server
     {
         //private static HttpListener _listener;
+        private static Router _router = new Router();
 
         /// <summary>
         /// Returns list of IP addresses assigned to localhost network devices,
@@ -67,6 +68,7 @@ namespace WebServLib
                 sem.WaitOne();
                 StartConnectionListener(listener);
             }
+            // ReSharper disable once FunctionNeverReturns
         }
 
         /// <summary>
@@ -84,16 +86,37 @@ namespace WebServLib
             // We have a connection!
             Log(context.Request);
 
+            var request = context.Request;
+            var path = request.RawUrl.LeftOf("?");
+            var verb = request.HttpMethod;
+            var parms = request.RawUrl.RightOf("?");
+            var kvParams = GetKeyValues(parms);
+
+            var resp = _router.Route(verb, path, kvParams);
+            Respond(context.Response, resp);
+            /* // This is the old way.
             var response = "Hello Browser!";
             var encoded = Encoding.UTF8.GetBytes(response);
 
             context.Response.ContentLength64 = encoded.Length;
             context.Response.OutputStream.Write(encoded, 0, encoded.Length);
             context.Response.OutputStream.Close();
+            */
         }
 
-        public static void Start()
+        private static void Respond(HttpListenerResponse response, ResponsePacket resp)
         {
+            response.ContentType = resp.ContentType;
+            response.ContentLength64 = resp.Data.Length;
+            response.OutputStream.Write(resp.Data, 0, resp.Data.Length);
+            response.ContentEncoding = resp.Encoding;
+            response.StatusCode = (int) HttpStatusCode.OK;
+            response.OutputStream.Close();
+        }
+
+        public static void Start(string websitePath)
+        {
+            _router.WebsitePath = websitePath;
             var localHostIPs = GetLocalHostIPs();
             var listener = InitializeListener(localHostIPs);
             Start(listener);
@@ -108,6 +131,14 @@ namespace WebServLib
             s.Append(request.Url.AbsoluteUri.RightOf('/', 3));
 
             Console.WriteLine(s.ToString());
+        }
+
+        private static Dictionary<string, string> GetKeyValues(string data, Dictionary<string, string> kv = null)
+        {
+            kv.IfNull(() => kv = new Dictionary<string, string>());
+            data.If(d => d.Length > 0,
+                d => d.Split('&').ForEach(keyValue => kv[keyValue.LeftOf('=')] = keyValue.RightOf('=')));
+            return kv;
         }
     }
 }

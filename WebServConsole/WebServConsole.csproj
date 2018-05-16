@@ -43,10 +43,20 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Extensions\Extensions.csproj">
+      <Project>{2ea8d28c-e232-4b16-a045-027bf2883d27}</Project>
+      <Name>Extensions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WebServLib\WebServLib.csproj">
       <Project>{a51fd7aa-fbbc-43cb-b98e-3b4e90960efb}</Project>
       <Name>WebServLib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Website\CSS\demo.css" />
+    <Content Include="Website\Pages\Demo\buttonclick.html" />
+    <Content Include="Website\Scripts\jquery-1.11.2.min.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

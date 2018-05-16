@@ -1,18 +1,30 @@
 ﻿using System;
-
+using System.Reflection;
+using Extensions;
 using WebServLib;
 
 namespace WebServConsole
 {
-    internal class Program
+    class Program
     {
         private static void Main(string[] args)
         {
             Console.WriteLine("Starting server:");
-            Server.Start();
+
+            var websitePath = GetWebsitePath();
+            Server.Start(websitePath);
 
             Console.WriteLine("Server successfully started!");
             Console.ReadLine();
+        }
+
+        public static string GetWebsitePath()
+        {
+            // Path of our exe.
+            var websitePath = Assembly.GetExecutingAssembly().Location;
+            websitePath = websitePath.LeftOfRightmostOf("\\").LeftOfRightmostOf("\\").LeftOfRightmostOf("\\") +
+                          "\\Website";
+            return websitePath;
         }
     }
 }
